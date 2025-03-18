@@ -106,8 +106,7 @@
         </div>
     </div>
     <div id="preview">
-        <img id="selected-card" src="" alt="البطاقة المختارة" style="display:none;">
-        <div id="name-overlay"></div>
+        <canvas id="canvas" style="display:none;"></canvas>
     </div>
     <div class="buttons">
         <button onclick="downloadCard()">تحميل البطاقة</button>
@@ -117,8 +116,8 @@
     <script>
         const cards = document.querySelectorAll('.card');
         const nameInput = document.getElementById('name-input');
-        const selectedCardImg = document.getElementById('selected-card');
-        const nameOverlay = document.getElementById('name-overlay');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
         let selectedCard = '';
 
         cards.forEach(card => {
@@ -126,16 +125,25 @@
                 cards.forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 selectedCard = card.getAttribute('data-card');
-                selectedCardImg.src = `card${selectedCard}.jpg`;
-                selectedCardImg.style.display = 'block';
-                updateName();
+                drawCard();
             });
         });
 
-        nameInput.addEventListener('input', updateName);
+        nameInput.addEventListener('input', drawCard);
 
-        function updateName() {
-            nameOverlay.textContent = nameInput.value;
+        function drawCard() {
+            if (!selectedCard) return;
+            const img = new Image();
+            img.src = `card${selectedCard}.jpg`;
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                ctx.font = '48px Tajawal';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText(nameInput.value, img.width / 2, img.height * 0.6);
+            };
         }
 
         function downloadCard() {
@@ -144,7 +152,7 @@
                 return;
             }
             const link = document.createElement('a');
-            link.href = `card${selectedCard}.jpg`;
+            link.href = canvas.toDataURL('image/png');
             link.download = 'بطاقة_معايدة.png';
             link.click();
         }
@@ -154,9 +162,19 @@
                 alert('الرجاء اختيار بطاقة وإدخال اسمك');
                 return;
             }
-            const message = `بطاقة معايدة خاصة بك: ${nameInput.value} \n رابط الصورة: ${window.location.origin}/card${selectedCard}.jpg`;
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+            canvas.toBlob(blob => {
+                const file = new File([blob], 'بطاقة_معايدة.png', { type: 'image/png' });
+                const data = new FormData();
+                data.append('file', file);
+
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = () => {
+                    const base64data = reader.result;
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent("بطاقة معايدة:")}&media=${encodeURIComponent(base64data)}`;
+                    window.open(whatsappUrl, '_blank');
+                };
+            }, 'image/png');
         }
     </script>
 </body>
