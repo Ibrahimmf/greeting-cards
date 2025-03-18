@@ -6,7 +6,7 @@
     <title>بطاقات معايدة</title>
     <style>
         body {
-            font-family: 'Tajawal', sans-serif; /* يمكنك تغيير الخط إلى المهند إذا كان متاحًا */
+            font-family: 'Tajawal', sans-serif;
             text-align: center;
             background-color: #f4f4f4;
             direction: rtl;
@@ -15,7 +15,7 @@
         }
         h1 {
             color: #333;
-            font-size: 24px;
+            font-size: 20px;
             margin-top: 20px;
         }
         .card-container {
@@ -28,7 +28,7 @@
         .card {
             border: 1px solid #ccc;
             padding: 10px;
-            width: 150px; /* تصغير حجم البطاقة للجوال */
+            width: 120px;
             cursor: pointer;
             background-color: white;
             border-radius: 10px;
@@ -43,8 +43,8 @@
         #name-input {
             margin: 10px;
             padding: 10px;
-            width: 80%; /* جعل الحقل أوسع للجوال */
-            font-size: 16px;
+            width: 80%;
+            font-size: 14px;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
@@ -52,7 +52,7 @@
             margin: 10px;
             position: relative;
             display: inline-block;
-            width: 90%; /* جعل المعاينة أوسع للجوال */
+            width: 90%;
         }
         #preview img {
             max-width: 100%;
@@ -60,47 +60,32 @@
         }
         #name-overlay {
             position: absolute;
-            top: 60%; /* تم تغيير القيمة من 50% إلى 60% لتحريك النص لأسفل */
+            top: 60%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 48px; /* تصغير حجم الخط للجوال */
+            font-size: 24px;
             color: white;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            white-space: pre-line; /* للسماح بوجود سطرين */
         }
         .buttons {
             margin: 10px;
         }
         .buttons button {
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 14px;
             margin: 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             background-color: #007bff;
             color: white;
-            width: 80%; /* جعل الأزرار أوسع للجوال */
+            width: 80%;
         }
         .buttons button:hover {
             background-color: #0056b3;
         }
-
-        /* تصميم متجاوب للجوال */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 20px;
-            }
-            .card {
-                width: 100px; /* تصغير حجم البطاقة أكثر للجوال */
-            }
-            #name-overlay {
-                font-size: 36px; /* تصغير حجم الخط أكثر للجوال */
-            }
-        }
     </style>
-    <!-- إضافة خط Tajawal من Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -158,24 +143,10 @@
                 alert('الرجاء اختيار بطاقة وإدخال اسمك');
                 return;
             }
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            img.src = `card${selectedCard}.jpg`;
-            img.onload = () => {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                ctx.font = '48px Tajawal'; /* حجم الخط للجوال */
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(nameInput.value, img.width / 2, img.height * 0.6); /* تم تغيير القيمة من 0.5 إلى 0.6 لتحريك النص لأسفل */
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/png');
-                link.download = 'بطاقة_معايدة.png';
-                link.click();
-            };
+            const link = document.createElement('a');
+            link.href = `card${selectedCard}.jpg`;
+            link.download = 'بطاقة_معايدة.png';
+            link.click();
         }
 
         function shareOnWhatsApp() {
@@ -183,24 +154,9 @@
                 alert('الرجاء اختيار بطاقة وإدخال اسمك');
                 return;
             }
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            img.src = `card${selectedCard}.jpg`;
-            img.onload = () => {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                ctx.font = '48px Tajawal'; /* حجم الخط للجوال */
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(nameInput.value, img.width / 2, img.height * 0.6); /* تم تغيير القيمة من 0.5 إلى 0.6 لتحريك النص لأسفل */
-                const imageUrl = canvas.toDataURL('image/png');
-                const message = 'بطاقة معايدة خاصة بك:';
-                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}&image=${encodeURIComponent(imageUrl)}`;
-                window.open(whatsappUrl, '_blank');
-            };
+            const message = `بطاقة معايدة خاصة بك: ${nameInput.value} \n رابط الصورة: ${window.location.origin}/card${selectedCard}.jpg`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
         }
     </script>
 </body>
