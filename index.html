@@ -18,7 +18,7 @@
         }
         h1 {
             color: #333;
-            font-size: 24px;
+            font-size: 22px;
             margin-top: 20px;
         }
         .input-container {
@@ -26,7 +26,7 @@
         }
         input {
             padding: 10px;
-            width: 80%;
+            width: 90%;
             font-size: 16px;
             text-align: center;
             border-radius: 5px;
@@ -37,14 +37,13 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 10px;
-            margin: 20px;
-            max-width: 800px;
-            margin: auto;
+            margin: 10px auto;
+            max-width: 600px;
         }
         .card {
             border: 1px solid #ccc;
-            padding: 10px;
-            width: 200px;
+            padding: 5px;
+            width: 120px; /* تصغير حجم البطاقات */
             cursor: pointer;
             background-color: white;
             border-radius: 10px;
@@ -62,51 +61,42 @@
             text-align: center;
             position: relative;
             display: none;
-            width: 90%;
-            max-width: 400px;
-        }
-        #preview {
             width: 100%;
-            border-radius: 10px;
+            max-width: 350px; /* تصغير المعاينة لتناسب الجوال */
         }
-        #name-overlay {
-            position: absolute;
-            top: 80%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            color: white;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            white-space: nowrap;
+        #canvas {
+            width: 100%; /* ضبط حجم الكانفاس ليتناسب مع الشاشة */
+            border-radius: 10px;
         }
         .buttons {
             margin-top: 10px;
         }
         .buttons button {
             padding: 10px;
-            font-size: 16px;
-            margin: 10px;
+            font-size: 14px;
+            margin: 5px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             background-color: #007bff;
             color: white;
-            width: 80%;
+            width: 90%;
         }
         .buttons button:hover {
             background-color: #0056b3;
         }
         @media (max-width: 600px) {
             h1 {
-                font-size: 20px;
+                font-size: 18px;
             }
             .card-container {
-                flex-direction: column;
-                align-items: center;
+                gap: 5px;
             }
             .card {
-                width: 90%;
+                width: 90px; /* تصغير حجم البطاقات أكثر للجوال */
+            }
+            #preview-container {
+                max-width: 300px; /* تقليل حجم المعاينة للجوال */
             }
         }
     </style>
@@ -168,10 +158,10 @@
                 canvas.width = img.width;
                 canvas.height = img.height;
                 ctx.drawImage(img, 0, 0);
-                ctx.font = '36px Arial';
+                ctx.font = 'bold 36px Arial';
                 ctx.fillStyle = 'white';
                 ctx.textAlign = 'center';
-                ctx.fillText(nameInput.value, img.width / 2, img.height * 0.8);
+                ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85); // تعديل موضع الاسم
                 document.getElementById('preview-container').style.display = 'block';
             };
         }
