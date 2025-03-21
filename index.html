@@ -1,208 +1,216 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#4caf50"/>
-    <title>بطاقات تهنئة العيد</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بطاقات تهنئة العيد</title>
 
-    <style>
-        /* تنسيق عام */
-        body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            direction: rtl;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            color: #333;
-            font-size: 22px;
-            margin-top: 20px;
-        }
-        .input-container {
-            margin: 10px;
-        }
-        input {
-            padding: 10px;
-            width: 90%;
-            font-size: 16px;
-            text-align: center;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .card-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 10px auto;
-            max-width: 600px;
-        }
-        .card {
-            border: 1px solid #ccc;
-            padding: 5px;
-            width: 120px; /* تصغير حجم البطاقات */
-            cursor: pointer;
-            background-color: white;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-        .card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        #preview-container {
-            margin: 20px auto;
-            text-align: center;
-            position: relative;
-            display: none;
-            width: 100%;
-            max-width: 350px; /* تصغير المعاينة لتناسب الجوال */
-        }
-        #canvas {
-            width: 100%; /* ضبط حجم الكانفاس ليتناسب مع الشاشة */
-            border-radius: 10px;
-        }
-        .buttons {
-            margin-top: 10px;
-        }
-        .buttons button {
-            padding: 10px;
-            font-size: 14px;
-            margin: 5px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            width: 90%;
-        }
-        .buttons button:hover {
-            background-color: #0056b3;
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 18px;
-            }
-            .card-container {
-                gap: 5px;
-            }
-            .card {
-                width: 90px; /* تصغير حجم البطاقات أكثر للجوال */
-            }
-            #preview-container {
-                max-width: 300px; /* تقليل حجم المعاينة للجوال */
-            }
-        }
-    </style>
+  <!-- خط المهند (أو بديل يدوي إن لم يتوفر المهند) -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Amiri', serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      direction: rtl;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 22px;
+      margin-top: 20px;
+    }
+
+    .input-container {
+      margin: 10px;
+    }
+
+    input {
+      padding: 10px;
+      width: 90%;
+      font-size: 16px;
+      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px auto;
+      max-width: 700px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 5px;
+      width: 110px;
+      cursor: pointer;
+      background-color: white;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    #preview-container {
+      margin: 20px auto;
+      text-align: center;
+      position: relative;
+      display: none;
+      width: 100%;
+      max-width: 350px;
+    }
+
+    #canvas {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .buttons {
+      margin-top: 10px;
+    }
+
+    .buttons button {
+      padding: 10px;
+      font-size: 14px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      width: 90%;
+    }
+
+    .buttons button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 90px;
+      }
+
+      #preview-container {
+        max-width: 300px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>اختر بطاقة التهنئة وأدخل اسمك</h1>
-    <div class="input-container">
-        <input type="text" id="name-input" placeholder="أدخل اسمك هنا">
-    </div>
-    
-    <div class="card-container">
-        <div class="card" data-card="eid-card-1.jpg">
-            <img src="eid-card-1.jpg" alt="بطاقة 1">
-        </div>
-        <div class="card" data-card="eid-card-2.jpg">
-            <img src="eid-card-2.jpg" alt="بطاقة 2">
-        </div>
-        <div class="card" data-card="eid-card-3.jpg">
-            <img src="eid-card-3.jpg" alt="بطاقة 3">
-        </div>
-        <div class="card" data-card="eid-card-4.jpg">
-            <img src="eid-card-4.jpg" alt="بطاقة 4">
-        </div>
-    </div>
+  <h1>اختر بطاقة التهنئة وأدخل اسمك</h1>
 
-    <div id="preview-container">
-        <canvas id="canvas"></canvas>
-        <div class="buttons">
-            <button onclick="downloadCard()">تحميل البطاقة</button>
-            <button onclick="shareOnWhatsApp()">مشاركة عبر الواتساب</button>
-        </div>
+  <div class="input-container">
+    <input type="text" id="name-input" placeholder="أدخل اسمك هنا" />
+  </div>
+
+  <div class="card-container">
+    <div class="card" data-card="eid-card-1.jpg"><img src="eid-card-1.jpg" alt="بطاقة 1" /></div>
+    <div class="card" data-card="eid-card-2.jpg"><img src="eid-card-2.jpg" alt="بطاقة 2" /></div>
+    <div class="card" data-card="eid-card-3.jpg"><img src="eid-card-3.jpg" alt="بطاقة 3" /></div>
+    <div class="card" data-card="eid-card-4.jpg"><img src="eid-card-4.jpg" alt="بطاقة 4" /></div>
+    <div class="card" data-card="eid-card-5.jpg"><img src="eid-card-5.jpg" alt="بطاقة 5" /></div>
+    <div class="card" data-card="eid-card-6.jpg"><img src="eid-card-6.jpg" alt="بطاقة 6" /></div>
+    <div class="card" data-card="eid-card-7.jpg"><img src="eid-card-7.jpg" alt="بطاقة 7" /></div>
+  </div>
+
+  <div id="preview-container">
+    <canvas id="canvas"></canvas>
+    <div class="buttons">
+      <button onclick="downloadCard()">تحميل البطاقة</button>
+      <button onclick="shareOnWhatsApp()">مشاركة عبر الواتساب</button>
     </div>
+  </div>
 
-    <script>
-        const cards = document.querySelectorAll('.card');
-        const nameInput = document.getElementById('name-input');
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        let selectedCard = '';
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const nameInput = document.getElementById('name-input');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let selectedCard = '';
 
-        // اختيار البطاقة
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                cards.forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                selectedCard = card.getAttribute('data-card');
-                drawCard();
-            });
+    // بطاقات بخلفية فاتحة = نكتب بخط أسود، والبقية بخط أبيض
+    const lightBackgrounds = ['eid-card-2.jpg', 'eid-card-5.jpg'];
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedCard = card.getAttribute('data-card');
+        drawCard();
+      });
+    });
+
+    nameInput.addEventListener('input', drawCard);
+
+    function drawCard() {
+      if (!selectedCard) return;
+      const img = new Image();
+      img.src = selectedCard;
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // تحديد لون الخط حسب الخلفية
+        const fontColor = lightBackgrounds.includes(selectedCard) ? 'black' : 'white';
+
+        ctx.font = 'bold 42px "Amiri", serif'; // خط عربي جميل بديل للمهند
+        ctx.fillStyle = fontColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
+
+        document.getElementById('preview-container').style.display = 'block';
+      };
+    }
+
+    function downloadCard() {
+      if (!selectedCard || !nameInput.value) {
+        alert('الرجاء اختيار بطاقة وإدخال اسمك');
+        return;
+      }
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'بطاقة_معايدة.png';
+      link.click();
+    }
+
+    function shareOnWhatsApp() {
+      if (!selectedCard || !nameInput.value) {
+        alert('الرجاء اختيار بطاقة وإدخال اسمك');
+        return;
+      }
+
+      const imgData = canvas.toDataURL('image/png');
+      fetch(imgData)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], "بطاقة_معايدة.png", { type: "image/png" });
+          const shareData = {
+            title: 'بطاقة تهنئة',
+            text: 'بطاقة تهنئة خاصة بك 🎉',
+            files: [file]
+          };
+          if (navigator.canShare && navigator.canShare(shareData)) {
+            navigator.share(shareData);
+          } else {
+            alert("المشاركة غير مدعومة في هذا المتصفح.");
+          }
         });
-
-        nameInput.addEventListener('input', drawCard);
-
-        // رسم البطاقة بالاسم
-        function drawCard() {
-            if (!selectedCard) return;
-            const img = new Image();
-            img.src = selectedCard;
-            img.onload = () => {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                ctx.font = 'bold 36px Arial';
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85); // تعديل موضع الاسم
-                document.getElementById('preview-container').style.display = 'block';
-            };
-        }
-
-        // تحميل البطاقة
-        function downloadCard() {
-            if (!selectedCard || !nameInput.value) {
-                alert('الرجاء اختيار بطاقة وإدخال اسمك');
-                return;
-            }
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'بطاقة_معايدة.png';
-            link.click();
-        }
-
-        // مشاركة عبر واتساب
-        function shareOnWhatsApp() {
-            if (!selectedCard || !nameInput.value) {
-                alert('الرجاء اختيار بطاقة وإدخال اسمك');
-                return;
-            }
-            const imgData = canvas.toDataURL('image/png');
-            fetch(imgData)
-                .then(res => res.blob())
-                .then(blob => {
-                    const file = new File([blob], "بطاقة_معايدة.png", { type: "image/png" });
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    const shareData = {
-                        title: 'بطاقة تهنئة',
-                        text: 'هذه بطاقة تهنئة خاصة بك!',
-                        files: [file]
-                    };
-                    if (navigator.canShare && navigator.canShare(shareData)) {
-                        navigator.share(shareData);
-                    } else {
-                        alert("المشاركة عبر واتساب غير مدعومة في هذا المتصفح.");
-                    }
-                });
-        }
-    </script>
+    }
+  </script>
 </body>
 </html>
