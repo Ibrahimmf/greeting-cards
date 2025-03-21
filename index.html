@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقات تهنئة العيد</title>
 
-  <!-- تحميل الخط الكوفي -->
-  <style>
-    @font-face {
-      font-family: 'Kufi';
-      src: url('kufi.ttf') format('truetype');
-    }
+  <!-- تحميل الخط الكوفي من Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
 
+  <style>
     body {
-      font-family: 'Kufi', Arial, sans-serif;
+      font-family: 'Reem Kufi', Arial, sans-serif;
       text-align: center;
       background-color: #f4f4f4;
       direction: rtl;
@@ -149,7 +146,7 @@
     const customFontColors = {
       'eid-card-1.jpg': 'white',   // بطاقة 1 → أبيض
       'eid-card-3.jpg': '#006400', // أخضر غامق
-      'eid-card-4.jpg': '#006400', // بطاقة 4 → أخضر غامق (تم التعديل هنا ✅)
+      'eid-card-4.jpg': '#006400', // بطاقة 4 → أخضر غامق
       'eid-card-5.jpg': '#800000', // عنابي
       'eid-card-6.jpg': '#003366'  // أزرق غامق
     };
@@ -180,7 +177,7 @@
         // تحديد لون الخط لكل بطاقة
         let fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
 
-        ctx.font = 'bold 48px "Kufi", serif';
+        ctx.font = 'bold 48px "Reem Kufi", sans-serif';
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
         ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
