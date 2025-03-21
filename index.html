@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقات تهنئة العيد</title>
 
-  <!-- خط المهند (أو بديل يدوي إن لم يتوفر المهند) -->
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-
+  <!-- تحميل خط المهند -->
   <style>
+    @font-face {
+      font-family: 'Mohanad';
+      src: url('al-mohanad.ttf') format('truetype');
+    }
+
     body {
-      font-family: 'Amiri', serif;
+      font-family: 'Mohanad', Arial, sans-serif;
       text-align: center;
       background-color: #f4f4f4;
       direction: rtl;
@@ -118,7 +121,7 @@
   </div>
 
   <div class="card-container">
-    <div class="card" data-card="eid-card-1.jpg"><img src="eid-card-1.jpg" alt="بطاقة 1" /></div>
+    <div class="card" data-card="eid-card-1.png"><img src="eid-card-1.png" alt="بطاقة 1" /></div>
     <div class="card" data-card="eid-card-2.jpg"><img src="eid-card-2.jpg" alt="بطاقة 2" /></div>
     <div class="card" data-card="eid-card-3.jpg"><img src="eid-card-3.jpg" alt="بطاقة 3" /></div>
     <div class="card" data-card="eid-card-4.jpg"><img src="eid-card-4.jpg" alt="بطاقة 4" /></div>
@@ -142,8 +145,8 @@
     const ctx = canvas.getContext('2d');
     let selectedCard = '';
 
-    // بطاقات بخلفية فاتحة = نكتب بخط أسود، والبقية بخط أبيض
-    const lightBackgrounds = ['eid-card-2.jpg', 'eid-card-5.jpg'];
+    // قائمة البطاقات الفاتحة (التي تحتاج خط داكن)
+    const lightBackgrounds = ['eid-card-1.png', 'eid-card-3.jpg', 'eid-card-5.jpg', 'eid-card-7.jpg'];
 
     cards.forEach(card => {
       card.addEventListener('click', () => {
@@ -165,10 +168,10 @@
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        // تحديد لون الخط حسب الخلفية
+        // تحديد لون الخط
         const fontColor = lightBackgrounds.includes(selectedCard) ? 'black' : 'white';
 
-        ctx.font = 'bold 42px "Amiri", serif'; // خط عربي جميل بديل للمهند
+        ctx.font = 'bold 42px "Mohanad", serif';
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
         ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
