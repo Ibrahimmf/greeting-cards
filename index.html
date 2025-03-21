@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقات تهنئة العيد</title>
 
-  <!-- تحميل خط المهند -->
+  <!-- تحميل الخط الجديد -->
   <style>
     @font-face {
-      font-family: 'Mohanad';
-      src: url('al-mohanad.ttf') format('truetype');
+      font-family: 'GESSTV';
+      src: url('ge-ss-tv-bold.otf') format('opentype');
     }
 
     body {
-      font-family: 'Mohanad', Arial, sans-serif;
+      font-family: 'GESSTV', Arial, sans-serif;
       text-align: center;
       background-color: #f4f4f4;
       direction: rtl;
@@ -134,7 +134,6 @@
     <canvas id="canvas"></canvas>
     <div class="buttons">
       <button onclick="downloadCard()">تحميل البطاقة</button>
-      <button onclick="shareOnWhatsApp()">مشاركة عبر الواتساب</button>
     </div>
   </div>
 
@@ -179,7 +178,7 @@
         // تحديد لون الخط لكل بطاقة
         let fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
 
-        ctx.font = 'bold 48px "Mohanad", serif';
+        ctx.font = 'bold 48px "GESSTV", serif';
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
         ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
@@ -193,34 +192,19 @@
         alert('الرجاء اختيار بطاقة وإدخال اسمك');
         return;
       }
+
+      // إنشاء صورة بدون أي نص إضافي
+      const downloadCanvas = document.createElement('canvas');
+      const downloadCtx = downloadCanvas.getContext('2d');
+
+      downloadCanvas.width = canvas.width;
+      downloadCanvas.height = canvas.height;
+      downloadCtx.drawImage(canvas, 0, 0);
+
       const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
+      link.href = downloadCanvas.toDataURL('image/png');
       link.download = 'بطاقة_معايدة.png';
       link.click();
-    }
-
-    function shareOnWhatsApp() {
-      if (!selectedCard || !nameInput.value) {
-        alert('الرجاء اختيار بطاقة وإدخال اسمك');
-        return;
-      }
-
-      const imgData = canvas.toDataURL('image/png');
-      fetch(imgData)
-        .then(res => res.blob())
-        .then(blob => {
-          const file = new File([blob], "بطاقة_معايدة.png", { type: "image/png" });
-          const shareData = {
-            title: 'بطاقة تهنئة',
-            text: 'بطاقة تهنئة خاصة بك 🎉',
-            files: [file]
-          };
-          if (navigator.canShare && navigator.canShare(shareData)) {
-            navigator.share(shareData);
-          } else {
-            alert("المشاركة غير مدعومة في هذا المتصفح.");
-          }
-        });
     }
   </script>
 </body>
