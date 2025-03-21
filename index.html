@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقات تهنئة العيد</title>
 
-  <!-- تحميل الخط الجديد -->
+  <!-- تحميل الخط الكوفي -->
   <style>
     @font-face {
-      font-family: 'GESSTV';
-      src: url('ge-ss-tv-bold.otf') format('opentype');
+      font-family: 'Kufi';
+      src: url('kufi.ttf') format('truetype');
     }
 
     body {
-      font-family: 'GESSTV', Arial, sans-serif;
+      font-family: 'Kufi', Arial, sans-serif;
       text-align: center;
       background-color: #f4f4f4;
       direction: rtl;
@@ -134,6 +134,7 @@
     <canvas id="canvas"></canvas>
     <div class="buttons">
       <button onclick="downloadCard()">تحميل البطاقة</button>
+      <button onclick="shareOnWhatsApp()">مشاركة عبر الواتساب</button>
     </div>
   </div>
 
@@ -148,6 +149,7 @@
     const customFontColors = {
       'eid-card-1.jpg': 'white',   // بطاقة 1 → أبيض
       'eid-card-3.jpg': '#006400', // أخضر غامق
+      'eid-card-4.jpg': '#006400', // بطاقة 4 → أخضر غامق (تم التعديل هنا ✅)
       'eid-card-5.jpg': '#800000', // عنابي
       'eid-card-6.jpg': '#003366'  // أزرق غامق
     };
@@ -178,7 +180,7 @@
         // تحديد لون الخط لكل بطاقة
         let fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
 
-        ctx.font = 'bold 48px "GESSTV", serif';
+        ctx.font = 'bold 48px "Kufi", serif';
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
         ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
@@ -193,18 +195,26 @@
         return;
       }
 
-      // إنشاء صورة بدون أي نص إضافي
-      const downloadCanvas = document.createElement('canvas');
-      const downloadCtx = downloadCanvas.getContext('2d');
-
-      downloadCanvas.width = canvas.width;
-      downloadCanvas.height = canvas.height;
-      downloadCtx.drawImage(canvas, 0, 0);
-
       const link = document.createElement('a');
-      link.href = downloadCanvas.toDataURL('image/png');
+      link.href = canvas.toDataURL('image/png');
       link.download = 'بطاقة_معايدة.png';
       link.click();
+    }
+
+    function shareOnWhatsApp() {
+      if (!selectedCard || !nameInput.value) {
+        alert('الرجاء اختيار بطاقة وإدخال اسمك');
+        return;
+      }
+
+      canvas.toBlob(blob => {
+        const file = new File([blob], "بطاقة_معايدة.png", { type: "image/png" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file], title: "بطاقة تهنئة", text: "🎉 بطاقة تهنئة خاصة بك!" });
+        } else {
+          alert("المشاركة غير مدعومة في هذا المتصفح.");
+        }
+      }, "image/png");
     }
   </script>
 </body>
