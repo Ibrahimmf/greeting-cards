@@ -121,7 +121,7 @@
   </div>
 
   <div class="card-container">
-    <div class="card" data-card="eid-card-1.png"><img src="eid-card-1.png" alt="بطاقة 1" /></div>
+    <div class="card" data-card="eid-card-1.jpg"><img src="eid-card-1.jpg" alt="بطاقة 1" /></div>
     <div class="card" data-card="eid-card-2.jpg"><img src="eid-card-2.jpg" alt="بطاقة 2" /></div>
     <div class="card" data-card="eid-card-3.jpg"><img src="eid-card-3.jpg" alt="بطاقة 3" /></div>
     <div class="card" data-card="eid-card-4.jpg"><img src="eid-card-4.jpg" alt="بطاقة 4" /></div>
@@ -145,8 +145,15 @@
     const ctx = canvas.getContext('2d');
     let selectedCard = '';
 
-    // قائمة البطاقات الفاتحة (التي تحتاج خط داكن)
-    const lightBackgrounds = ['eid-card-1.png', 'eid-card-3.jpg', 'eid-card-5.jpg', 'eid-card-7.jpg'];
+    // ألوان النص لكل بطاقة
+    const customFontColors = {
+      'eid-card-3.jpg': '#006400', // أخضر غامق
+      'eid-card-5.jpg': '#800000', // عنابي
+      'eid-card-6.jpg': '#003366'  // أزرق غامق
+    };
+
+    // بطاقات ذات خلفية فاتحة تحتاج نص داكن
+    const lightBackgrounds = ['eid-card-1.jpg', 'eid-card-3.jpg', 'eid-card-5.jpg', 'eid-card-7.jpg'];
 
     cards.forEach(card => {
       card.addEventListener('click', () => {
@@ -168,8 +175,8 @@
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        // تحديد لون الخط
-        const fontColor = lightBackgrounds.includes(selectedCard) ? 'black' : 'white';
+        // تحديد لون الخط لكل بطاقة
+        let fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
 
         ctx.font = 'bold 42px "Mohanad", serif';
         ctx.fillStyle = fontColor;
