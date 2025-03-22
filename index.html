@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقات تهنئة العيد</title>
 
+  <!-- خط كوفي من Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -42,7 +43,7 @@
       flex-wrap: wrap;
       gap: 10px;
       margin: 10px auto;
-      max-width: 700px;
+      max-width: 800px;
     }
 
     .card {
@@ -125,6 +126,7 @@
     <div class="card" data-card="eid-card-6.jpg"><img src="eid-card-6.jpg" alt="بطاقة 6" /></div>
     <div class="card" data-card="eid-card-7.jpg"><img src="eid-card-7.jpg" alt="بطاقة 7" /></div>
     <div class="card" data-card="eid-card-8.jpg"><img src="eid-card-8.jpg" alt="بطاقة 8" /></div>
+    <div class="card" data-card="eid-card-9.jpg"><img src="eid-card-9.jpg" alt="بطاقة 9" /></div>
   </div>
 
   <div id="preview-container">
@@ -149,7 +151,8 @@
       'eid-card-5.jpg': '#800000',
       'eid-card-6.jpg': '#003366',
       'eid-card-7.jpg': 'white',
-      'eid-card-8.jpg': '#8B4513' // بني
+      'eid-card-8.jpg': '#8B4513',
+      'eid-card-9.jpg': 'white'
     };
 
     const lightBackgrounds = ['eid-card-3.jpg', 'eid-card-5.jpg'];
@@ -174,19 +177,19 @@
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        let fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
+        const fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
 
         ctx.font = 'bold 64px "Reem Kufi", sans-serif';
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
 
+        // ظل خفيف
         ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
         ctx.shadowBlur = 4;
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
         ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
-
         document.getElementById('preview-container').style.display = 'block';
       };
     }
@@ -196,7 +199,6 @@
         alert('الرجاء اختيار بطاقة وإدخال اسمك');
         return;
       }
-
       const link = document.createElement('a');
       link.href = canvas.toDataURL('image/png');
       link.download = 'بطاقة_معايدة.png';
