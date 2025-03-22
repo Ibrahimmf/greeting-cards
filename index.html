@@ -183,13 +183,16 @@
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
 
-        // ظل خفيف
+        // ظل خفيف للنص
         ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
         ctx.shadowBlur = 4;
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
-        ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
+        // 📌 موضع الاسم: وسط البطاقة 9 فقط، والبقية في الأسفل
+        let textY = (selectedCard === 'eid-card-9.jpg') ? (img.height / 2) : (img.height * 0.85);
+
+        ctx.fillText(nameInput.value, img.width / 2, textY);
         document.getElementById('preview-container').style.display = 'block';
       };
     }
