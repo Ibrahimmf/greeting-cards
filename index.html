@@ -124,6 +124,7 @@
     <div class="card" data-card="eid-card-5.jpg"><img src="eid-card-5.jpg" alt="بطاقة 5" /></div>
     <div class="card" data-card="eid-card-6.jpg"><img src="eid-card-6.jpg" alt="بطاقة 6" /></div>
     <div class="card" data-card="eid-card-7.jpg"><img src="eid-card-7.jpg" alt="بطاقة 7" /></div>
+    <div class="card" data-card="eid-card-8.jpg"><img src="eid-card-8.jpg" alt="بطاقة 8" /></div>
   </div>
 
   <div id="preview-container">
@@ -141,14 +142,14 @@
     const ctx = canvas.getContext('2d');
     let selectedCard = '';
 
-    // ألوان النص المخصصة لكل بطاقة
     const customFontColors = {
       'eid-card-1.jpg': 'white',
       'eid-card-3.jpg': '#006400',
       'eid-card-4.jpg': '#006400',
       'eid-card-5.jpg': '#800000',
       'eid-card-6.jpg': '#003366',
-      'eid-card-7.jpg': 'white' // ✅ تمت إضافة الأبيض للبطاقة 7
+      'eid-card-7.jpg': 'white',
+      'eid-card-8.jpg': '#8B4513' // بني
     };
 
     const lightBackgrounds = ['eid-card-3.jpg', 'eid-card-5.jpg'];
@@ -179,7 +180,6 @@
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
 
-        // ✅ إضافة ظل خفيف للنص
         ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
         ctx.shadowBlur = 4;
         ctx.shadowOffsetX = 2;
