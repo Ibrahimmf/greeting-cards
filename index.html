@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقات تهنئة العيد</title>
 
-  <!-- تحميل الخط الكوفي من Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     body {
@@ -142,17 +141,17 @@
     const ctx = canvas.getContext('2d');
     let selectedCard = '';
 
-    // ألوان النص لكل بطاقة
+    // ألوان النص المخصصة لكل بطاقة
     const customFontColors = {
-      'eid-card-1.jpg': 'white',   // بطاقة 1 → أبيض
-      'eid-card-3.jpg': '#006400', // أخضر غامق
-      'eid-card-4.jpg': '#006400', // بطاقة 4 → أخضر غامق
-      'eid-card-5.jpg': '#800000', // عنابي
-      'eid-card-6.jpg': '#003366'  // أزرق غامق
+      'eid-card-1.jpg': 'white',
+      'eid-card-3.jpg': '#006400',
+      'eid-card-4.jpg': '#006400',
+      'eid-card-5.jpg': '#800000',
+      'eid-card-6.jpg': '#003366',
+      'eid-card-7.jpg': 'white' // ✅ تمت إضافة الأبيض للبطاقة 7
     };
 
-    // بطاقات ذات خلفية فاتحة تحتاج نص داكن
-    const lightBackgrounds = ['eid-card-3.jpg', 'eid-card-5.jpg', 'eid-card-7.jpg'];
+    const lightBackgrounds = ['eid-card-3.jpg', 'eid-card-5.jpg'];
 
     cards.forEach(card => {
       card.addEventListener('click', () => {
@@ -174,12 +173,18 @@
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        // تحديد لون الخط لكل بطاقة
         let fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
 
-        ctx.font = 'bold 48px "Reem Kufi", sans-serif';
+        ctx.font = 'bold 64px "Reem Kufi", sans-serif';
         ctx.fillStyle = fontColor;
         ctx.textAlign = 'center';
+
+        // ✅ إضافة ظل خفيف للنص
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
         ctx.fillText(nameInput.value, img.width / 2, img.height * 0.85);
 
         document.getElementById('preview-container').style.display = 'block';
