@@ -43,7 +43,7 @@
       flex-wrap: wrap;
       gap: 10px;
       margin: 10px auto;
-      max-width: 800px;
+      max-width: 900px;
     }
 
     .card {
@@ -127,6 +127,7 @@
     <div class="card" data-card="eid-card-7.jpg"><img src="eid-card-7.jpg" alt="بطاقة 7" /></div>
     <div class="card" data-card="eid-card-8.jpg"><img src="eid-card-8.jpg" alt="بطاقة 8" /></div>
     <div class="card" data-card="eid-card-9.jpg"><img src="eid-card-9.jpg" alt="بطاقة 9" /></div>
+    <div class="card" data-card="eid-card-10.jpg"><img src="eid-card-10.jpg" alt="بطاقة 10" /></div>
   </div>
 
   <div id="preview-container">
@@ -148,81 +149,4 @@
       'eid-card-1.jpg': 'white',
       'eid-card-3.jpg': '#006400',
       'eid-card-4.jpg': '#006400',
-      'eid-card-5.jpg': '#800000',
-      'eid-card-6.jpg': '#003366',
-      'eid-card-7.jpg': 'white',
-      'eid-card-8.jpg': '#8B4513',
-      'eid-card-9.jpg': 'white'
-    };
-
-    const lightBackgrounds = ['eid-card-3.jpg', 'eid-card-5.jpg'];
-
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        cards.forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        selectedCard = card.getAttribute('data-card');
-        drawCard();
-      });
-    });
-
-    nameInput.addEventListener('input', drawCard);
-
-    function drawCard() {
-      if (!selectedCard) return;
-      const img = new Image();
-      img.src = selectedCard;
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        const fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
-
-        ctx.font = 'bold 64px "Reem Kufi", sans-serif';
-        ctx.fillStyle = fontColor;
-        ctx.textAlign = 'center';
-
-        // ظل خفيف للنص
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
-        ctx.shadowBlur = 4;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-
-        // 📌 موضع الاسم: وسط البطاقة 9 فقط، والبقية في الأسفل
-        let textY = (selectedCard === 'eid-card-9.jpg') ? (img.height / 2) : (img.height * 0.85);
-
-        ctx.fillText(nameInput.value, img.width / 2, textY);
-        document.getElementById('preview-container').style.display = 'block';
-      };
-    }
-
-    function downloadCard() {
-      if (!selectedCard || !nameInput.value) {
-        alert('الرجاء اختيار بطاقة وإدخال اسمك');
-        return;
-      }
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = 'بطاقة_معايدة.png';
-      link.click();
-    }
-
-    function shareOnWhatsApp() {
-      if (!selectedCard || !nameInput.value) {
-        alert('الرجاء اختيار بطاقة وإدخال اسمك');
-        return;
-      }
-
-      canvas.toBlob(blob => {
-        const file = new File([blob], "بطاقة_معايدة.png", { type: "image/png" });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({ files: [file], title: "بطاقة تهنئة", text: "🎉 بطاقة تهنئة خاصة بك!" });
-        } else {
-          alert("المشاركة غير مدعومة في هذا المتصفح.");
-        }
-      }, "image/png");
-    }
-  </script>
-</body>
-</html>
+      'eid-card
