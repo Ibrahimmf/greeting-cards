@@ -149,4 +149,83 @@
       'eid-card-1.jpg': 'white',
       'eid-card-3.jpg': '#006400',
       'eid-card-4.jpg': '#006400',
-      'eid-card
+      'eid-card-5.jpg': '#800000',
+      'eid-card-6.jpg': '#003366',
+      'eid-card-7.jpg': 'white',
+      'eid-card-8.jpg': '#8B4513',
+      'eid-card-9.jpg': 'white',
+      'eid-card-10.jpg': '#8B4513'
+    };
+
+    const lightBackgrounds = ['eid-card-3.jpg', 'eid-card-5.jpg'];
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedCard = card.getAttribute('data-card');
+        drawCard();
+      });
+    });
+
+    nameInput.addEventListener('input', drawCard);
+
+    function drawCard() {
+      if (!selectedCard) return;
+      const img = new Image();
+      img.src = selectedCard;
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        const fontColor = customFontColors[selectedCard] || (lightBackgrounds.includes(selectedCard) ? 'black' : 'white');
+
+        ctx.font = 'bold 64px "Reem Kufi", sans-serif';
+        ctx.fillStyle = fontColor;
+        ctx.textAlign = 'center';
+
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        // موضع الاسم حسب البطاقة
+        const textY = (selectedCard === 'eid-card-9.jpg') ? (img.height / 2) :
+                      (selectedCard === 'eid-card-10.jpg') ? (img.height * 0.93) :
+                      (img.height * 0.85);
+
+        ctx.fillText(nameInput.value, img.width / 2, textY);
+        document.getElementById('preview-container').style.display = 'block';
+      };
+    }
+
+    function downloadCard() {
+      if (!selectedCard || !nameInput.value) {
+        alert('الرجاء اختيار بطاقة وإدخال اسمك');
+        return;
+      }
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'بطاقة_معايدة.png';
+      link.click();
+    }
+
+    function shareOnWhatsApp() {
+      if (!selectedCard || !nameInput.value) {
+        alert('الرجاء اختيار بطاقة وإدخال اسمك');
+        return;
+      }
+
+      canvas.toBlob(blob => {
+        const file = new File([blob], "بطاقة_معايدة.png", { type: "image/png" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file], title: "بطاقة تهنئة", text: "🎉 بطاقة تهنئة خاصة بك!" });
+        } else {
+          alert("المشاركة غير مدعومة في هذا المتصفح.");
+        }
+      }, "image/png");
+    }
+  </script>
+</body>
+</html>
